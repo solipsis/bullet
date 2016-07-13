@@ -7,13 +7,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.components.CircularMovement;
-import com.mygdx.game.components.LinearMovement;
-import com.mygdx.game.components.Position;
-import com.mygdx.game.components.Sprite;
+import com.mygdx.game.components.*;
 import com.mygdx.game.systems.CircularMovementSystem;
 import com.mygdx.game.systems.LinearMovementSystem;
 import com.mygdx.game.systems.RenderingSystem;
+import com.mygdx.game.systems.SpawningSystem;
 
 public class BulletGame extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -24,7 +22,7 @@ public class BulletGame extends ApplicationAdapter {
 	final float WORLD_WIDTH = 1000;
 	final float WORLD_HEIGHT = 1000;
 
-	World world;
+	public static World world;
 	
 	@Override
 	public void create () {
@@ -48,15 +46,17 @@ public class BulletGame extends ApplicationAdapter {
 		WorldConfiguration config = new WorldConfiguration()
 				.setSystem(new RenderingSystem())
 				.setSystem(new CircularMovementSystem())
-				.setSystem(new LinearMovementSystem());
+				.setSystem(new LinearMovementSystem())
+				.setSystem(new SpawningSystem());
 		world = new World(config);
 
 		int spawner = world.create();
 		world.edit(spawner)
-				.add(new Position(10,10))
-				.add(new Sprite(300, 300))
+				.add(new Position(200,200))
+				.add(new Sprite(200, 200, false))
 				.add(new CircularMovement())
-				.add(new LinearMovement());
+				//.add(new LinearMovement())
+                .add(new Spawner());
 	}
 
 	@Override

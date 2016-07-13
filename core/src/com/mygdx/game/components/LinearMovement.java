@@ -9,5 +9,10 @@ public class LinearMovement extends Component {
     public float deltaX = .5f;
     public float deltaY = .5f;
 
+    public LinearMovement(float deltaX, float deltaY) {
+        this.deltaX = deltaX;
+        this.deltaY = deltaY;
+    }
+
     public LinearMovement() {}
 }

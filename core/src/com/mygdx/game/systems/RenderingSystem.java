@@ -26,7 +26,11 @@ public class RenderingSystem extends EntityProcessingSystem {
     @Override
     public void inserted(Entity entity) {
         Sprite sprite = spriteMapper.get(entity.getId());
-        sprite.init(assetManager.get());
+        if (sprite.deleteMe) {
+            sprite.init(assetManager.getBullet());
+        } else {
+            sprite.init(assetManager.get());
+        }
     }
 
     @Override

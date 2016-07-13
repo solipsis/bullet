@@ -11,11 +11,14 @@ public class Sprite extends Component {
     public int width;
     public int height;
 
+    public boolean deleteMe = false;
+
     public Sprite() {}
 
-    public Sprite(int width, int height) {
+    public Sprite(int width, int height, boolean deleteMe) {
         this.width = width;
         this.height = height;
+        this.deleteMe = deleteMe;
     }
 
     public void init(Texture texture) {
