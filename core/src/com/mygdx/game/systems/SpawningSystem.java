@@ -42,7 +42,10 @@ public class SpawningSystem extends EntityProcessingSystem {
                     .add(new Position(position.x, position.y))
                     .add(new CircularMovement())
                     .add(new Spawner())
+       //             .add(new Countdown(60))
                     .add(new Sprite(30, 30, true));
+
+            BulletGame.debugEntitiesCreated += 3;
 
             int bullet2 = BulletGame.world.create();
             BulletGame.world.edit(bullet2)

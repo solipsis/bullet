@@ -8,10 +8,7 @@ import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.components.*;
-import com.mygdx.game.systems.CircularMovementSystem;
-import com.mygdx.game.systems.LinearMovementSystem;
-import com.mygdx.game.systems.RenderingSystem;
-import com.mygdx.game.systems.SpawningSystem;
+import com.mygdx.game.systems.*;
 
 public class BulletGame extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -21,6 +18,8 @@ public class BulletGame extends ApplicationAdapter {
 	public static Camera camera;
 	final float WORLD_WIDTH = 1000;
 	final float WORLD_HEIGHT = 1000;
+
+	public static long debugEntitiesCreated = 0;
 
 	public static World world;
 	
@@ -47,8 +46,10 @@ public class BulletGame extends ApplicationAdapter {
 				.setSystem(new RenderingSystem())
 				.setSystem(new CircularMovementSystem())
 				.setSystem(new LinearMovementSystem())
+				.setSystem(new CountdownSystem())
 				.setSystem(new SpawningSystem());
 		world = new World(config);
+
 
 		int spawner = world.create();
 		world.edit(spawner)
@@ -65,6 +66,7 @@ public class BulletGame extends ApplicationAdapter {
 		fpsLogger.log();
 
 		world.setDelta(Gdx.graphics.getDeltaTime());
+		System.out.println(debugEntitiesCreated);
 		world.process();
 	}
 
