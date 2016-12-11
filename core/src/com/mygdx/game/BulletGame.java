@@ -47,17 +47,28 @@ public class BulletGame extends ApplicationAdapter {
 				.setSystem(new CircularMovementSystem())
 				.setSystem(new LinearMovementSystem())
 				.setSystem(new CountdownSystem())
-				.setSystem(new SpawningSystem());
+				.setSystem(new SpawningSystem())
+                .setSystem(new RingSpawningSystem())
+				.setSystem(new RotatedLinearMovementSystem());
 		world = new World(config);
 
 
 		int spawner = world.create();
 		world.edit(spawner)
-				.add(new Position(200,200))
+				.add(new Position(400,400))
 				.add(new Sprite(200, 200, false))
-				.add(new CircularMovement())
+			//	.add(new CircularMovement())
 				//.add(new LinearMovement())
                 .add(new Spawner());
+
+        int circleSpawner = world.create();
+        world.edit(circleSpawner)
+                .add(new Position(600,400))
+                .add(new Sprite(200, 200, false))
+                	.add(new CircularMovement())
+                //.add(new LinearMovement())
+                .add(new Spawner())
+                .add(new RingPositions());
 	}
 
 	@Override

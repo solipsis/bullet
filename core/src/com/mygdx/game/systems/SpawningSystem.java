@@ -25,46 +25,52 @@ public class SpawningSystem extends EntityProcessingSystem {
         super(Aspect.all(Position.class, Spawner.class));
     }
 
-
+    int test = 0;
     @Override
     public void process(Entity e) {
 
-        Spawner spawner = spawnerMapper.get(e);
-        Position position = positionMapper.get(e);
-
-        spawner.currTime -= 1;
-        if (spawner.currTime < 1) {
-            spawner.currTime = spawner.time;
-            int bullet = BulletGame.world.create();
-            BulletGame.world.edit(bullet)
-                    //.add(new LinearMovement(10, 10))
-                    .add(new LinearMovement(2,2))
-                    .add(new Position(position.x, position.y))
-                    .add(new CircularMovement())
-                    .add(new Spawner())
-       //             .add(new Countdown(60))
-                    .add(new Sprite(30, 30, true));
-
-            BulletGame.debugEntitiesCreated += 3;
-
-            int bullet2 = BulletGame.world.create();
-            BulletGame.world.edit(bullet2)
-                    .add(new LinearMovement(10, 10))
-                    .add(new LinearMovement(1,0))
-                    .add(new Position(position.x, position.y))
-                    .add(new CircularMovement())
-                    // .add(new Spawner())
-                    .add(new Sprite(30, 30, true));
-
-            int bullet3 = BulletGame.world.create();
-            BulletGame.world.edit(bullet3)
-                    .add(new LinearMovement(1,.5f))
-                    .add(new Position(position.x, position.y))
-                    .add(new CircularMovement())
-                    // .add(new Spawner())
-                    .add(new Sprite(50, 50, true));
-
-        }
+//        Spawner spawner = spawnerMapper.get(e);
+//        Position position = positionMapper.get(e);
+//
+//        spawner.currTime -= 60;
+//
+//
+//
+//        if (spawner.currTime < 1) {
+//            test = (test + 1) % 360;
+//            spawner.currTime = spawner.time;
+//            int bullet = BulletGame.world.create();
+//            BulletGame.world.edit(bullet)
+//                    //.add(new LinearMovement(10, 10))
+//       //             .add(new LinearMovement(2,2))
+//                    .add(new RotatedLinearMovement(test, 0.5f))
+//                    .add(new Position(position.x, position.y))
+//                    .add(new CircularMovement())
+//       //             .add(new Spawner())
+//       //             .add(new Countdown(60))
+//                    .add(new Sprite(30, 30, true));
+//
+//            BulletGame.debugEntitiesCreated += 3;
+//
+//            /*
+//            int bullet2 = BulletGame.world.create();
+//            BulletGame.world.edit(bullet2)
+//                    .add(new LinearMovement(10, 10))
+//                    .add(new LinearMovement(1,0))
+//                    .add(new Position(position.x, position.y))
+//                    .add(new CircularMovement())
+//                    // .add(new Spawner())
+//                    .add(new Sprite(30, 30, true));
+//
+//            int bullet3 = BulletGame.world.create();
+//            BulletGame.world.edit(bullet3)
+//                    .add(new LinearMovement(1,.5f))
+//                    .add(new Position(position.x, position.y))
+//                    .add(new CircularMovement())
+//                    // .add(new Spawner())
+//                    .add(new Sprite(50, 50, true));
+//            */
+        //}
     }
 
 
