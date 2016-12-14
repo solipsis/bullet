@@ -48,7 +48,9 @@ public class BulletGame extends ApplicationAdapter {
 				.setSystem(new LinearMovementSystem())
 				.setSystem(new CountdownSystem())
 				.setSystem(new SpawningSystem())
-                .setSystem(new RingSpawningSystem())
+              //  .setSystem(new RingSpawningSystem())
+				.setSystem(new PatternEditingSystem())
+				.setSystem(new PatternSpawningSystem())
 				.setSystem(new RotatedLinearMovementSystem());
 		world = new World(config);
 
@@ -68,6 +70,7 @@ public class BulletGame extends ApplicationAdapter {
                 	.add(new CircularMovement())
                 //.add(new LinearMovement())
                 .add(new Spawner())
+				.add(new Pattern())
                 .add(new RingPositions());
 	}
 
@@ -77,7 +80,7 @@ public class BulletGame extends ApplicationAdapter {
 		fpsLogger.log();
 
 		world.setDelta(Gdx.graphics.getDeltaTime());
-		System.out.println(debugEntitiesCreated);
+		//System.out.println(debugEntitiesCreated);
 		world.process();
 	}
 
