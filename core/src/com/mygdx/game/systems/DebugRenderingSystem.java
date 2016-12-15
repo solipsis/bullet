@@ -14,54 +14,46 @@ import com.mygdx.game.components.Sprite;
 import com.mygdx.game.managers.AssetManager;
 
 /**
- * Created by dave on 7/10/2016.
+ * Created by dave on 12/14/2016.
  */
-public class RenderingSystem extends EntityProcessingSystem {
+public class DebugRenderingSystem extends EntityProcessingSystem {
 
-    protected ComponentMapper<Sprite> spriteMapper;
     protected ComponentMapper<Position> positionMapper;
+    protected ComponentMapper<Sprite> mSprite;
 
-    private SpriteBatch batch;
-    private AssetManager assetManager = new AssetManager();
+    private ShapeRenderer renderer;
 
     @Override
     public void inserted(Entity entity) {
-        Sprite sprite = spriteMapper.get(entity.getId());
-        if (sprite.deleteMe) {
-            sprite.init(assetManager.getBullet());
-        } else {
-            sprite.init(assetManager.get());
-        }
+
     }
 
     @Override
     protected void begin() {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
 
+        renderer.begin(ShapeRenderer.ShapeType.Line);
     }
 
-    public RenderingSystem() {
+    public DebugRenderingSystem() {
         super(Aspect.all(Sprite.class, Position.class));
 
-        batch = new SpriteBatch();
-        batch.setProjectionMatrix(BulletGame.camera.combined);
+        renderer = new ShapeRenderer();
+        renderer.setProjectionMatrix(BulletGame.camera.combined);
     }
 
     @Override
     protected void process(Entity e) {
 
-        Sprite sprite = spriteMapper.get(e);
+        Sprite sprite = mSprite.get(e);
         Position position = positionMapper.get(e);
         int spriteWidth = sprite.width;
         int spriteHeight = sprite.height;
-        sprite.sprite.setPosition(position.x - (spriteWidth/2), position.y-(spriteHeight/2));
-        sprite.sprite.draw(batch);
-    }
+      //  sprite.sprite.setPosition(position.x - (spriteWidth/2), position.y-(spriteHeight/2));
+        renderer.rect(position.x - (spriteWidth/2), position.y-(spriteHeight/2), spriteWidth, spriteHeight);
+     }
 
     @Override
     protected void end() {
-        batch.end();
+        renderer.end();
     }
 }

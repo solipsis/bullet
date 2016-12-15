@@ -7,8 +7,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.components.*;
 import com.mygdx.game.systems.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BulletGame extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -48,11 +52,15 @@ public class BulletGame extends ApplicationAdapter {
 				.setSystem(new LinearMovementSystem())
 				.setSystem(new CountdownSystem())
 				.setSystem(new SpawningSystem())
+				.setSystem(new DebugRenderingSystem())
               //  .setSystem(new RingSpawningSystem())
 				.setSystem(new PatternEditingSystem())
 				.setSystem(new PatternSpawningSystem())
 				.setSystem(new RotatedLinearMovementSystem());
 		world = new World(config);
+
+		List<Vector2> editOffsets = new ArrayList<Vector2>();
+
 
 
 		int spawner = world.create();
@@ -70,7 +78,8 @@ public class BulletGame extends ApplicationAdapter {
                 	.add(new CircularMovement())
                 //.add(new LinearMovement())
                 .add(new Spawner())
-				.add(new Pattern())
+				.add(new Pattern(editOffsets))
+				.add(new EditBox())
                 .add(new RingPositions());
 	}
 
@@ -79,6 +88,8 @@ public class BulletGame extends ApplicationAdapter {
 
 		fpsLogger.log();
 
+		Gdx.gl.glClearColor(0, 0, 0.2f, 0);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		world.setDelta(Gdx.graphics.getDeltaTime());
 		//System.out.println(debugEntitiesCreated);
 		world.process();

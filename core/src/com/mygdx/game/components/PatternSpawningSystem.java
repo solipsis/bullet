@@ -37,7 +37,7 @@ public class PatternSpawningSystem extends EntityProcessingSystem {
             test = (test + 10) % 360;
 
             spawner.currTime = spawner.time;
-            System.out.println("offsetSize: " + pattern.offsets.size());
+            //System.out.println("offsetSize: " + pattern.offsets.size());
 
             //Vector2 start = new Vector2(20,20);
             Vector2 start = new Vector2(0, 0);
