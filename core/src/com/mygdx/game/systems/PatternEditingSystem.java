@@ -3,12 +3,9 @@ package com.mygdx.game.systems;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
-import com.artemis.EntitySystem;
 import com.artemis.systems.EntityProcessingSystem;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -16,6 +13,7 @@ import com.mygdx.game.BulletGame;
 import com.mygdx.game.components.EditBox;
 import com.mygdx.game.components.Pattern;
 import com.mygdx.game.components.Position;
+import com.mygdx.game.components.Sprite;
 
 import static com.badlogic.gdx.Gdx.input;
 
@@ -43,6 +41,23 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
     }
 
     @Override
+    public void inserted(Entity e) {
+
+        Pattern pattern = patternComponentMapper.get(e);
+        EditBox editBox = mEditBox.get(e);
+
+        for (Vector2 point : pattern.offsets) {
+            int bullet = BulletGame.world.create();
+            BulletGame.world.edit(bullet).add(new Position(editBox.rect.x + (editBox.rect.width/2) + point.x, editBox.rect.y + (editBox.rect.height/2) + point.y))
+                    .add(new Sprite(30, 30, true));
+        }
+
+
+
+        BulletGame.debugEntitiesCreated += 1;
+    }
+
+    @Override
     protected void process(Entity e) {
 
         EditBox editBox = mEditBox.get(e);
@@ -61,6 +76,11 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
             pattern.offsets.add(new Vector2(xPos-editBox.rect.x-(editBox.rect.width/2), yPos-editBox.rect.y-(editBox.rect.height/2)));
             System.out.println("pattern updated");
             System.out.println("offsetX: ");
+
+            Vector2 point = pattern.offsets.get(pattern.offsets.size()-1);
+            int patternBullet = BulletGame.world.create();
+            BulletGame.world.edit(patternBullet).add(new Position(editBox.rect.x + (editBox.rect.width/2) + point.x, editBox.rect.y + (editBox.rect.height/2) + point.y))
+                    .add(new Sprite(10, 10, true));
         }
         click = false;
 
