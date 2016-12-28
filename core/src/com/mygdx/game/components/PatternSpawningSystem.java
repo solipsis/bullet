@@ -49,7 +49,7 @@ public class PatternSpawningSystem extends EntityProcessingSystem {
                         // .add(new LinearMovement(2, 2))
                         //             .add(new LinearMovement(2,2))
                         .add(new RotatedLinearMovement(test, 1.5f))
-                        .add(new Position(position.x + pattern.offsets.get(i).x, position.y + pattern.offsets.get(i).y))
+                        .add(new Position(position.x + pattern.offsets.get(i).offset.x, position.y + pattern.offsets.get(i).offset.y))
                        // .add(new CircularMovement())
                         //             .add(new Spawner())
                         //             .add(new Countdown(60))

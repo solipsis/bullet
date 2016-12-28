@@ -78,8 +78,9 @@ public class BulletGame extends ApplicationAdapter {
                 	.add(new CircularMovement())
                 //.add(new LinearMovement())
                 .add(new Spawner())
-				.add(new Pattern(editOffsets))
+				.add(new Pattern())
 				.add(new EditBox())
+				.add(new Edit())
                 .add(new RingPositions());
 	}
 

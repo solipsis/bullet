@@ -10,10 +10,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.BulletGame;
-import com.mygdx.game.components.EditBox;
-import com.mygdx.game.components.Pattern;
-import com.mygdx.game.components.Position;
-import com.mygdx.game.components.Sprite;
+import com.mygdx.game.BulletSpawn;
+import com.mygdx.game.components.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.badlogic.gdx.Gdx.input;
 
@@ -24,21 +25,27 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
 
     protected ComponentMapper<Pattern> patternComponentMapper;
     protected ComponentMapper<EditBox> mEditBox;
+    protected ComponentMapper<Edit> mEdit;
+
     boolean click = false;
     boolean delete;
     float xPos;
     float yPos;
+    List<Integer> toDelete = new ArrayList();
+    List<Integer> activeIds = new ArrayList();
 
     // todo: move this renderer lel. why the fuck i put this here
     private ShapeRenderer renderer;
 
 
     public PatternEditingSystem() {
-        super(Aspect.all(Position.class, Pattern.class, EditBox.class));
+        super(Aspect.all(Position.class, Pattern.class, EditBox.class, Edit.class));
 
         renderer = new ShapeRenderer();
         renderer.setProjectionMatrix(BulletGame.camera.combined);
     }
+
+    public void cleanPatterns() {}
 
     @Override
     public void inserted(Entity e) {
@@ -46,9 +53,9 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
         Pattern pattern = patternComponentMapper.get(e);
         EditBox editBox = mEditBox.get(e);
 
-        for (Vector2 point : pattern.offsets) {
+        for (BulletSpawn point : pattern.offsets) {
             int bullet = BulletGame.world.create();
-            BulletGame.world.edit(bullet).add(new Position(editBox.rect.x + (editBox.rect.width/2) + point.x, editBox.rect.y + (editBox.rect.height/2) + point.y))
+            BulletGame.world.edit(bullet).add(new Position(editBox.rect.x + (editBox.rect.width/2) + point.offset.x, editBox.rect.y + (editBox.rect.height/2) + point.offset.y))
                     .add(new Sprite(30, 30, true));
         }
 
@@ -65,6 +72,8 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
         if (delete) {
             Pattern pattern = patternComponentMapper.get(e);
             if (!pattern.offsets.isEmpty()) {
+                world.getEntity(mEdit.get(e).managedIds.get(mEdit.get(e).managedIds.size()-1)).deleteFromWorld();
+                mEdit.get(e).managedIds.remove(mEdit.get(e).managedIds.size()-1);
                 pattern.offsets.remove(pattern.offsets.size() - 1);
             }
             delete = false;
@@ -73,14 +82,22 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
         if (click && editBox.rect.contains(xPos, yPos)) {
             click = false;
             Pattern pattern = patternComponentMapper.get(e);
-            pattern.offsets.add(new Vector2(xPos-editBox.rect.x-(editBox.rect.width/2), yPos-editBox.rect.y-(editBox.rect.height/2)));
+
+
+            Vector2 offset = new Vector2(xPos-editBox.rect.x-(editBox.rect.width/2), yPos-editBox.rect.y-(editBox.rect.height/2));
+            BulletSpawn newSpawnPoint = new BulletSpawn(pattern.spawnIdCounter++, offset);
+
+
+            pattern.offsets.add(newSpawnPoint);
             System.out.println("pattern updated");
             System.out.println("offsetX: ");
 
-            Vector2 point = pattern.offsets.get(pattern.offsets.size()-1);
+            Vector2 point = pattern.offsets.get(pattern.offsets.size()-1).offset;
+
             int patternBullet = BulletGame.world.create();
             BulletGame.world.edit(patternBullet).add(new Position(editBox.rect.x + (editBox.rect.width/2) + point.x, editBox.rect.y + (editBox.rect.height/2) + point.y))
                     .add(new Sprite(10, 10, true));
+            mEdit.get(e).managedIds.add(patternBullet);
         }
         click = false;
 
