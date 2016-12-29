@@ -37,7 +37,7 @@ public class SelectSystem extends EntityProcessingSystem {
 
     @Override
     protected void begin() {
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.begin(ShapeRenderer.ShapeType.Line);
         renderer.setColor(1,0,0,1);
     }
 

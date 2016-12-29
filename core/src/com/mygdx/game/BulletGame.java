@@ -70,7 +70,7 @@ public class BulletGame extends ApplicationAdapter {
 		int spawner = world.create();
 		world.edit(spawner)
 				.add(new Position(400,400))
-			//	.add(new Sprite(200, 200, false))
+				.add(new Sprite(200, 200, false))
 			//	.add(new CircularMovement())
 				//.add(new LinearMovement())
                 .add(new Spawner());
@@ -78,7 +78,7 @@ public class BulletGame extends ApplicationAdapter {
         int circleSpawner = world.create();
         world.edit(circleSpawner)
                 .add(new Position(600,400))
-          //      .add(new Sprite(200, 200, false))
+                .add(new Sprite(200, 200, false))
                 	.add(new CircularMovement())
                 //.add(new LinearMovement())
                 .add(new Spawner())
