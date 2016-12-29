@@ -8,6 +8,7 @@ import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.components.*;
 import com.mygdx.game.systems.*;
 
@@ -17,11 +18,12 @@ import java.util.List;
 public class BulletGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-	FPSLogger fpsLogger = new FPSLogger();
+	public static FPSLogger fpsLogger = new FPSLogger();
 
 	public static Camera camera;
-	final float WORLD_WIDTH = 1000;
-	final float WORLD_HEIGHT = 1000;
+	public static Vector3 mousePos;
+	public static final float WORLD_WIDTH = 1000;
+	public static final float WORLD_HEIGHT = 1000;
 
 	public static long debugEntitiesCreated = 0;
 
@@ -38,7 +40,7 @@ public class BulletGame extends ApplicationAdapter {
 			System.out.println("full screen failed");
 		}
 		*/
-
+        mousePos = new Vector3();
 
 
 		camera = new OrthographicCamera(WORLD_WIDTH, WORLD_WIDTH * (WORLD_HEIGHT / WORLD_WIDTH));
@@ -56,6 +58,8 @@ public class BulletGame extends ApplicationAdapter {
               //  .setSystem(new RingSpawningSystem())
 				.setSystem(new PatternEditingSystem())
 				.setSystem(new PatternSpawningSystem())
+				.setSystem(new MousePositionSystem())
+				.setSystem(new SelectSystem())
 				.setSystem(new RotatedLinearMovementSystem());
 		world = new World(config);
 
@@ -66,7 +70,7 @@ public class BulletGame extends ApplicationAdapter {
 		int spawner = world.create();
 		world.edit(spawner)
 				.add(new Position(400,400))
-				.add(new Sprite(200, 200, false))
+			//	.add(new Sprite(200, 200, false))
 			//	.add(new CircularMovement())
 				//.add(new LinearMovement())
                 .add(new Spawner());
@@ -74,12 +78,13 @@ public class BulletGame extends ApplicationAdapter {
         int circleSpawner = world.create();
         world.edit(circleSpawner)
                 .add(new Position(600,400))
-                .add(new Sprite(200, 200, false))
+          //      .add(new Sprite(200, 200, false))
                 	.add(new CircularMovement())
                 //.add(new LinearMovement())
                 .add(new Spawner())
 				.add(new Pattern())
 				.add(new EditBox())
+				.add(new SelectBox(200, 200))
 				.add(new Edit())
                 .add(new RingPositions());
 	}
@@ -103,5 +108,8 @@ public class BulletGame extends ApplicationAdapter {
 		//camera.viewportWidth = 1920;
 		//camera.viewportHeight = 1080;
 		camera.update();
+		RenderingSystem.shader.begin();
+		RenderingSystem.shader.setUniformf("Resolution", WORLD_WIDTH, WORLD_HEIGHT);
+		RenderingSystem.shader.end();
 	}
 }

@@ -160,13 +160,20 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
     public boolean mouseMoved(int screenX, int screenY) {
      //   System.out.println("x: " + screenX + "  y: " + screenY);
         Vector3 gameMouse = BulletGame.camera.unproject(new Vector3(screenX, screenY, 0));
+        BulletGame.mousePos = gameMouse;
         //System.out.println("gameX: " + gameMouse.x + "  gameY: " + gameMouse.y);
-        return true;
+        return false;
     }
 
     @Override
     public boolean scrolled(int amount) {
-        return false;
+
+            //LibGDX mouse wheel is inverted compared to lwjgl-basics
+            NormalShaderTest.LIGHT_POS.z = Math.max(0f, NormalShaderTest.LIGHT_POS.z - (amount * 0.005f));
+            System.out.println("New light Z: "+NormalShaderTest.LIGHT_POS.z);
+            return true;
+
+
     }
 
     @Override

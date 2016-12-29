@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class EditBox extends Component {
 
+    public Rectangle rect;
+
     public EditBox() {
 
         rect = new Rectangle();
@@ -16,7 +18,7 @@ public class EditBox extends Component {
         rect.setHeight(100);
     }
 
-    public Rectangle rect;
+
 
 
 }
