@@ -49,7 +49,7 @@ public class DebugRenderingSystem extends EntityProcessingSystem {
         int spriteWidth = sprite.width;
         int spriteHeight = sprite.height;
       //  sprite.sprite.setPosition(position.x - (spriteWidth/2), position.y-(spriteHeight/2));
-        renderer.rect(position.x - (spriteWidth/2), position.y-(spriteHeight/2), spriteWidth, spriteHeight);
+ //       renderer.rect(position.x - (spriteWidth/2), position.y-(spriteHeight/2), spriteWidth, spriteHeight);
      }
 
     @Override

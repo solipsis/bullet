@@ -32,7 +32,7 @@ public class MousePositionSystem extends BaseSystem {
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 990);
         font.draw(batch, "Total Entities: " + BulletGame.debugEntitiesCreated, 150, 990);
         font.draw(batch, "X: " + BulletGame.mousePos.x + " Y: " + BulletGame.mousePos.y, 50, 50);
-        font.draw(batch, "LightPos X: " + NormalShaderTest.LIGHT_POS.x + " Y: " + NormalShaderTest.LIGHT_POS.y + " Z: " + NormalShaderTest.LIGHT_POS.z, 40, 900);
+     //   font.draw(batch, "LightPos X: " + NormalShaderTest.LIGHT_POS.x + " Y: " + NormalShaderTest.LIGHT_POS.y + " Z: " + NormalShaderTest.LIGHT_POS.z, 40, 900);
     }
 
     @Override

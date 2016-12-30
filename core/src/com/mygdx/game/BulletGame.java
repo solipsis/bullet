@@ -60,6 +60,7 @@ public class BulletGame extends ApplicationAdapter {
 				.setSystem(new PatternSpawningSystem())
 				.setSystem(new MousePositionSystem())
 				.setSystem(new SelectSystem())
+				.setSystem(new SpacialHashingSystem())
 				.setSystem(new RotatedLinearMovementSystem());
 		world = new World(config);
 

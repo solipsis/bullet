@@ -11,12 +11,12 @@ public class NormalShaderTest {
     //our constants...
     public static final float DEFAULT_LIGHT_Z = 0.075f;
     public static final float AMBIENT_INTENSITY = 1f;
-    public static final float LIGHT_INTENSITY = 4f;
+    public static final float LIGHT_INTENSITY = 2f;
 
     public static final Vector3 LIGHT_POS = new Vector3(0f,0f,DEFAULT_LIGHT_Z);
 
     //Light RGB and intensity (alpha)
-    public static final Vector3 LIGHT_COLOR = new Vector3(0.9f, 0.1f, 0.1f);
+    public static final Vector3 LIGHT_COLOR = new Vector3(0.1f, 0.9f, 0.1f);
 
     //Ambient RGB and intensity (alpha)
     public static final Vector3 AMBIENT_COLOR = new Vector3(0.5f, 0.5f, 0.5f);
