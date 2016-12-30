@@ -85,7 +85,7 @@ public class BulletGame extends ApplicationAdapter {
                 .add(new Spawner())
 				.add(new Pattern())
 				.add(new EditBox())
-				.add(new SelectBox(200, 200))
+				//.add(new SelectBox(300, 300))
 				.add(new Edit())
                 .add(new RingPositions());
 	}

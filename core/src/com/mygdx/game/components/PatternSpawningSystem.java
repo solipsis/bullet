@@ -6,6 +6,7 @@ import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.BulletGame;
+import com.mygdx.game.systems.Hitbox;
 
 /**
  * Created by dave on 12/13/16.
@@ -46,6 +47,7 @@ public class PatternSpawningSystem extends EntityProcessingSystem {
                 // start.rotate(360/ringPos.num);
                 int bullet = BulletGame.world.create();
                 BulletGame.world.edit(bullet)
+                        .add(new Hitbox(30,30, -15, -15))
                         // .add(new LinearMovement(2, 2))
                         //             .add(new LinearMovement(2,2))
                         .add(new RotatedLinearMovement(test, 1.5f))

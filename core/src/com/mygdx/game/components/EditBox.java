@@ -13,7 +13,7 @@ public class EditBox extends Component {
     public EditBox() {
 
         rect = new Rectangle();
-        rect.setPosition(100,100);
+        rect.setPosition(150,150);
         rect.setWidth(100);
         rect.setHeight(100);
     }
