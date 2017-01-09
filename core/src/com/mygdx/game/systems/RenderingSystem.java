@@ -98,9 +98,13 @@ public class RenderingSystem extends EntityProcessingSystem {
 
         Sprite sprite = spriteMapper.get(e);
         Position position = positionMapper.get(e);
+
         int spriteWidth = sprite.width;
         int spriteHeight = sprite.height;
         sprite.sprite.setPosition(position.x - (spriteWidth/2), position.y-(spriteHeight/2));
+        if (BulletGame.beatCount > 0) {
+            sprite.sprite.setScale(1 + (float)((float)BulletGame.beatCount/50.0f), 1+ (float)((float)BulletGame.beatCount/50.0f));
+        }
         sprite.sprite.getTexture().bind(0);
         sprite.sprite.draw(batch);
         //batch.draw(sprite.sprite.getTexture(), sprite.sprite.getX(), sprite.sprite.getY());
@@ -109,5 +113,6 @@ public class RenderingSystem extends EntityProcessingSystem {
     @Override
     protected void end() {
         batch.end();
+        BulletGame.beatCount--;
     }
 }
