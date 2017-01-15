@@ -52,6 +52,7 @@ public class SpacialHashingSystem extends EntityProcessingSystem {
         }
         renderer.begin(ShapeRenderer.ShapeType.Line);
         batch.begin();
+
     }
 
     private void addToBucket(int bucket, int id) {
@@ -96,10 +97,10 @@ public class SpacialHashingSystem extends EntityProcessingSystem {
 
 
             if (topLeft == mouseBucket || topRight == mouseBucket || bottomLeft == mouseBucket || bottomRight == mouseBucket) {
-         //       renderer.setColor(1,0,0,1);
+//                renderer.setColor(1,0,0,1);
             }
-         //   renderer.rect(rect.x, rect.y, hitbox.rect.width, hitbox.rect.height);
-        //    renderer.setColor(1,1,1,1);
+ //           renderer.rect(rect.x, rect.y, hitbox.rect.width, hitbox.rect.height);
+  //          renderer.setColor(1,1,1,1);
         }
 
 

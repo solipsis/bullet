@@ -53,6 +53,7 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
         Pattern pattern = patternComponentMapper.get(e);
         EditBox editBox = mEditBox.get(e);
 
+
         for (BulletSpawn point : pattern.offsets) {
             int bullet = BulletGame.world.create();
             BulletGame.world.edit(bullet).add(new Position(editBox.rect.x + (editBox.rect.width/2) + point.offset.x, editBox.rect.y + (editBox.rect.height/2) + point.offset.y))
@@ -88,6 +89,7 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
             BulletSpawn newSpawnPoint = new BulletSpawn(pattern.spawnIdCounter++, offset);
 
 
+
             pattern.offsets.add(newSpawnPoint);
             System.out.println("pattern updated");
             System.out.println("offsetX: ");
@@ -96,7 +98,8 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
 
             int patternBullet = BulletGame.world.create();
             BulletGame.world.edit(patternBullet).add(new Position(editBox.rect.x + (editBox.rect.width/2) + point.x, editBox.rect.y + (editBox.rect.height/2) + point.y))
-                    .add(new Sprite(10, 10, true));
+                    .add(new Sprite(10, 10, true))
+                    .add(new SelectBox(10,10, offset));
             mEdit.get(e).managedIds.add(patternBullet);
         }
         click = false;
@@ -107,11 +110,12 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
 
     @Override
     public void initialize() {
-        input.setInputProcessor(this);
+        BulletGame.inputMultiplexer.addProcessor(this);
     }
 
     @Override
     protected void begin() {
+     //   input.setInputProcessor(this);
 
         renderer.begin(ShapeRenderer.ShapeType.Line);
     }
@@ -143,7 +147,7 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
             click = true;
          System.out.println("gameX: " + gameMouse.x + "  gameY: " + gameMouse.y);
       //  }
-        return true;
+        return false;
     }
 
     @Override
@@ -153,14 +157,20 @@ public class PatternEditingSystem extends EntityProcessingSystem implements Inpu
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+
+//        Vector3 gameMouse = BulletGame.camera.unproject(new Vector3(screenX, screenY, 0));
+//        BulletGame.mousePos = gameMouse;
+//        System.out.println("dragging");
+//        System.out.println("gameX: " + gameMouse.x + "  gameY: " + gameMouse.y);
         return false;
     }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
      //   System.out.println("x: " + screenX + "  y: " + screenY);
-        Vector3 gameMouse = BulletGame.camera.unproject(new Vector3(screenX, screenY, 0));
-        BulletGame.mousePos = gameMouse;
+//        Vector3 gameMouse = BulletGame.camera.unproject(new Vector3(screenX, screenY, 0));
+//        BulletGame.mousePos = gameMouse;
+//        System.out.println("move");
         //System.out.println("gameX: " + gameMouse.x + "  gameY: " + gameMouse.y);
         return false;
     }

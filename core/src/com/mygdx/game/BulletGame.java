@@ -3,9 +3,8 @@ package com.mygdx.game;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,6 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.badlogic.gdx.Gdx.input;
+
 public class BulletGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
@@ -36,6 +37,7 @@ public class BulletGame extends ApplicationAdapter {
 	public static final float WORLD_WIDTH = 1000;
 	public static final float WORLD_HEIGHT = 1000;
 	public static Music currentSong;
+	public static InputMultiplexer inputMultiplexer;
 
 	public static long debugEntitiesCreated = 0;
 
@@ -54,7 +56,8 @@ public class BulletGame extends ApplicationAdapter {
 		*/
         mousePos = new Vector3();
 
-
+		inputMultiplexer = new InputMultiplexer();
+		input.setInputProcessor(inputMultiplexer);
 		camera = new OrthographicCamera(WORLD_WIDTH, WORLD_WIDTH * (WORLD_HEIGHT / WORLD_WIDTH));
 		//camera = new OrthographicCamera(1920, 1080);
 		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
@@ -68,12 +71,13 @@ public class BulletGame extends ApplicationAdapter {
 				.setSystem(new SpawningSystem())
 				.setSystem(new DebugRenderingSystem())
 				.setSystem(new BeatPlottingSystem())
+				.setSystem(new SelectedObjectUpdatingSystem())
               //  .setSystem(new RingSpawningSystem())
 				.setSystem(new PatternEditingSystem())
+				.setSystem(new SelectSystem())
 				.setSystem(new PatternSpawningSystem())
 				.setSystem(new MousePositionSystem())
-				.setSystem(new SelectSystem())
-				.setSystem(new SpacialHashingSystem())
+			//	.setSystem(new SpacialHashingSystem())
 				.setSystem(new RotatedLinearMovementSystem());
 		world = new World(config);
 
@@ -82,8 +86,9 @@ public class BulletGame extends ApplicationAdapter {
 		AudioInputStream audioInputStream;
 		Song song;
 		try {
-			audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(Gdx.files.internal("lucid.wav").file())));
-			currentSong = Gdx.audio.newMusic(Gdx.files.internal("lucid.wav"));
+			audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(Gdx.files.internal("illumination.wav").file())));
+			currentSong = Gdx.audio.newMusic(Gdx.files.internal("illumination.wav"));
+			currentSong.setVolume(0.1f);
 			currentSong.play();
 //			song = new Song(audioInputStream);
 //			System.out.printf(song.graphData.toString());
@@ -112,7 +117,8 @@ public class BulletGame extends ApplicationAdapter {
         world.edit(circleSpawner)
                 .add(new Position(600,400))
                 .add(new Sprite(200, 200, false))
-                	.add(new CircularMovement())
+   //             	.add(new CircularMovement())
+				.add(new SelectBox(200,200))
                 //.add(new LinearMovement())
                 .add(new Spawner())
 				.add(new Pattern())

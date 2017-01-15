@@ -44,7 +44,7 @@ public class BeatPlottingSystem extends EntityProcessingSystem {
    //     System.out.println(song.durationInSeconds);
         for (int x = 0; x < song.pretty.size(); x++) {
             int i = song.pretty.get(x);
-            if (Math.abs(i) > 20000) {
+            if (Math.abs(i) > 15000) {
                 if ((int)((BulletGame.currentSong.getPosition() / (song.durationInSeconds)) * 10000) == (int)(((float)x / (float)song.pretty.size()) * 10000)) {
                  //   System.out.println("A: " + (int)((BulletGame.currentSong.getPosition() / (song.durationInSeconds)) * 1000));
                  //   System.out.println("B: " + (int)(((float)x / (float)song.pretty.size()) * 1000));
