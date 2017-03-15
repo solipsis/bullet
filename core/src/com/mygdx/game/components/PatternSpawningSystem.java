@@ -31,7 +31,7 @@ public class PatternSpawningSystem extends EntityProcessingSystem {
         Pattern pattern = patternMapper.get(e);
 
 
-        spawner.currTime -= 60;
+        spawner.currTime -= 30;
 
 
         if (spawner.currTime < 1) {
@@ -49,9 +49,10 @@ public class PatternSpawningSystem extends EntityProcessingSystem {
                 BulletGame.world.edit(bullet)
                         .add(new Hitbox(30,30, -15, -15))
                         // .add(new LinearMovement(2, 2))
-                        //             .add(new LinearMovement(2,2))
+                                     .add(new LinearMovement(0,2))
                         .add(new RotatedLinearMovement(test, 1.5f))
                         .add(new Position(position.x + pattern.offsets.get(i).offset.x, position.y + pattern.offsets.get(i).offset.y))
+                        .add(new Decay())
                        // .add(new CircularMovement())
                      //   .add(new SelectBox(30,30))
                         //             .add(new Spawner())

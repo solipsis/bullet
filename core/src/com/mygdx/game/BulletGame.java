@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Json;
 import com.mygdx.game.components.*;
 import com.mygdx.game.systems.*;
 
@@ -74,9 +75,11 @@ public class BulletGame extends ApplicationAdapter {
 				.setSystem(new SelectedObjectUpdatingSystem())
               //  .setSystem(new RingSpawningSystem())
 				.setSystem(new PatternEditingSystem())
+		//		.setSystem(new DecaySystem())
 				.setSystem(new SelectSystem())
 				.setSystem(new PatternSpawningSystem())
 				.setSystem(new MousePositionSystem())
+				.setSystem(new ZigZagSystem())
 			//	.setSystem(new SpacialHashingSystem())
 				.setSystem(new RotatedLinearMovementSystem());
 		world = new World(config);
@@ -88,7 +91,7 @@ public class BulletGame extends ApplicationAdapter {
 		try {
 			audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(Gdx.files.internal("illumination.wav").file())));
 			currentSong = Gdx.audio.newMusic(Gdx.files.internal("illumination.wav"));
-			currentSong.setVolume(0.1f);
+			currentSong.setVolume(0.09f);
 			currentSong.play();
 //			song = new Song(audioInputStream);
 //			System.out.printf(song.graphData.toString());
@@ -117,7 +120,8 @@ public class BulletGame extends ApplicationAdapter {
         world.edit(circleSpawner)
                 .add(new Position(600,400))
                 .add(new Sprite(200, 200, false))
-   //             	.add(new CircularMovement())
+				.add(new CircularMovement())
+				.add(new ZigZag(100, 900, 4))
 				.add(new SelectBox(200,200))
                 //.add(new LinearMovement())
                 .add(new Spawner())
@@ -150,5 +154,6 @@ public class BulletGame extends ApplicationAdapter {
 		RenderingSystem.shader.begin();
 		RenderingSystem.shader.setUniformf("Resolution", WORLD_WIDTH, WORLD_HEIGHT);
 		RenderingSystem.shader.end();
+
 	}
 }
