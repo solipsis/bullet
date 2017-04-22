@@ -81,7 +81,9 @@ public class BulletGame extends ApplicationAdapter {
 				.setSystem(new MousePositionSystem())
 				.setSystem(new ZigZagSystem())
 			//	.setSystem(new SpacialHashingSystem())
-				.setSystem(new RotatedLinearMovementSystem());
+				.setSystem(new CenteredBoundingBoxSystem())
+				.setSystem(new RotatedLinearMovementSystem())
+				.setSystem(new ContainedLinearMovementSystem());
 		world = new World(config);
 
 		List<Vector2> editOffsets = new ArrayList<Vector2>();
@@ -130,6 +132,25 @@ public class BulletGame extends ApplicationAdapter {
 				//.add(new SelectBox(300, 300))
 				.add(new Edit())
                 .add(new RingPositions());
+
+		int boundBoxSpawner = world.create();
+		CenteredBoundingBox box = new CenteredBoundingBox(150, 150);
+		world.edit(boundBoxSpawner)
+				.add(new Position(600,600))
+				.add(new LinearMovement(0.3f, 0.3f))
+				//.add(new CircularMovement())
+				.add(box);
+
+				//
+
+		int testBoundedBullet = world.create();
+		world.edit(testBoundedBullet)
+				.add(new Position(620, 650))
+				.add(new ContainedLinearMovement(1.1f, 1.3f, box.rect))
+				.add(new Sprite(10, 10, true));
+
+
+
 	}
 
 	@Override
